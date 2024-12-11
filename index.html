@@ -25,10 +25,16 @@
             margin: 20px auto;
             border: 1px solid #bdc3c7;
         }
-        .line {
+        .highlight {
             position: absolute;
             top: 0;
             bottom: 0;
+            background: rgba(255, 0, 0, 0.2);
+        }
+        .line {
+            position: absolute;
+            top: -10px;
+            bottom: -10px;
             width: 2px;
         }
         .local-time {
@@ -37,9 +43,9 @@
         .market-time {
             background: red;
         }
-        .time-label {
+        .label {
             position: absolute;
-            top: 25px;
+            top: 30px;
             font-size: 0.9em;
             color: #2c3e50;
         }
@@ -51,9 +57,13 @@
     <p id="market-hours">Calculating market hours...</p>
 
     <div class="time-bar" id="time-bar">
+        <div class="highlight" id="market-highlight"></div>
         <div class="line local-time" id="local-time-line"></div>
+        <div class="label" id="local-time-label"></div>
         <div class="line market-time" id="market-open-line"></div>
+        <div class="label" id="market-open-label">New York Opens</div>
         <div class="line market-time" id="market-close-line"></div>
+        <div class="label" id="market-close-label">New York Closes</div>
     </div>
 
     <script>
@@ -65,13 +75,11 @@
             document.getElementById('local-time').textContent = `Your local time: ${localTime} (${timeZone})`;
 
             // Update local time line
-            updateLocalTimeLine(now);
+            updateLocalTimeLine(now, localTime);
         }
 
         // Function to calculate New York market hours in local time in 24-hour format
         function displayMarketHours() {
-            const nyTimeZone = 'America/New_York';
-
             // Define New York market opening and closing times in UTC
             const nyOpenUTC = new Date();
             nyOpenUTC.setUTCHours(14, 30, 0, 0); // NYSE opens at 9:30 AM EST/EDT
@@ -93,15 +101,19 @@
         }
 
         // Function to update the position of the local time line
-        function updateLocalTimeLine(now) {
+        function updateLocalTimeLine(now, localTime) {
             const totalMinutes = now.getHours() * 60 + now.getMinutes();
             const percentage = (totalMinutes / (24 * 60)) * 100;
 
             const localTimeLine = document.getElementById('local-time-line');
             localTimeLine.style.left = `${percentage}%`;
+
+            const localTimeLabel = document.getElementById('local-time-label');
+            localTimeLabel.style.left = `${percentage}%`;
+            localTimeLabel.textContent = `Local Time: ${localTime}`;
         }
 
-        // Function to update the position of market open and close lines
+        // Function to update the position of market open and close lines and highlight
         function updateMarketTimeLines(openTime, closeTime) {
             const openMinutes = openTime.getHours() * 60 + openTime.getMinutes();
             const closeMinutes = closeTime.getHours() * 60 + closeTime.getMinutes();
@@ -111,9 +123,19 @@
 
             const marketOpenLine = document.getElementById('market-open-line');
             const marketCloseLine = document.getElementById('market-close-line');
+            const marketHighlight = document.getElementById('market-highlight');
 
             marketOpenLine.style.left = `${openPercentage}%`;
             marketCloseLine.style.left = `${closePercentage}%`;
+
+            marketHighlight.style.left = `${openPercentage}%`;
+            marketHighlight.style.width = `${closePercentage - openPercentage}%`;
+
+            const marketOpenLabel = document.getElementById('market-open-label');
+            const marketCloseLabel = document.getElementById('market-close-label');
+
+            marketOpenLabel.style.left = `${openPercentage}%`;
+            marketCloseLabel.style.left = `${closePercentage}%`;
         }
 
         // Call functions to display time and market hours
@@ -122,3 +144,4 @@
     </script>
 </body>
 </html>
+
