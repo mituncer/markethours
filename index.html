@@ -37,6 +37,12 @@
         .market-time {
             background: red;
         }
+        .time-label {
+            position: absolute;
+            top: 25px;
+            font-size: 0.9em;
+            color: #2c3e50;
+        }
     </style>
 </head>
 <body>
@@ -51,10 +57,10 @@
     </div>
 
     <script>
-        // Function to display local time and time zone
+        // Function to display local time and time zone in 24-hour format
         function displayLocalTime() {
             const now = new Date();
-            const localTime = now.toLocaleString();
+            const localTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
             const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             document.getElementById('local-time').textContent = `Your local time: ${localTime} (${timeZone})`;
 
@@ -62,23 +68,23 @@
             updateLocalTimeLine(now);
         }
 
-        // Function to calculate New York market hours in local time
+        // Function to calculate New York market hours in local time in 24-hour format
         function displayMarketHours() {
             const nyTimeZone = 'America/New_York';
 
-            // Define New York market opening and closing times
-            const nyOpen = new Date();
-            nyOpen.setUTCHours(14, 30, 0, 0); // NYSE opens at 9:30 AM EST/EDT
+            // Define New York market opening and closing times in UTC
+            const nyOpenUTC = new Date();
+            nyOpenUTC.setUTCHours(14, 30, 0, 0); // NYSE opens at 9:30 AM EST/EDT
 
-            const nyClose = new Date();
-            nyClose.setUTCHours(21, 0, 0, 0); // NYSE closes at 4:00 PM EST/EDT
+            const nyCloseUTC = new Date();
+            nyCloseUTC.setUTCHours(21, 0, 0, 0); // NYSE closes at 4:00 PM EST/EDT
 
             // Convert to local time
-            const localOpen = new Date(nyOpen.toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }));
-            const localClose = new Date(nyClose.toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }));
+            const localOpen = new Date(nyOpenUTC.toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }));
+            const localClose = new Date(nyCloseUTC.toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }));
 
-            const openTime = localOpen.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-            const closeTime = localClose.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+            const openTime = localOpen.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+            const closeTime = localClose.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
 
             document.getElementById('market-hours').textContent = `New York Market Hours in your local time: Open: ${openTime}, Close: ${closeTime}`;
 
