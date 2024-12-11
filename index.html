@@ -52,7 +52,7 @@
     </style>
 </head>
 <body>
-    <h1>Local Time and New York Market Hours</h1>
+    <h1>Local Time and Market Hours</h1>
     <p id="local-time">Detecting your local time...</p>
     <p id="market-hours">Calculating market hours...</p>
 
@@ -64,6 +64,14 @@
         <div class="label" id="market-open-label">New York Opens</div>
         <div class="line market-time" id="market-close-line"></div>
         <div class="label" id="market-close-label">New York Closes</div>
+    </div>
+
+    <div class="time-bar" id="bist-time-bar">
+        <div class="highlight" id="bist-highlight"></div>
+        <div class="line market-time" id="bist-open-line"></div>
+        <div class="label" id="bist-open-label">BIST Opens</div>
+        <div class="line market-time" id="bist-close-line"></div>
+        <div class="label" id="bist-close-label">BIST Closes</div>
     </div>
 
     <script>
@@ -78,7 +86,7 @@
             updateLocalTimeLine(now, localTime);
         }
 
-        // Function to calculate New York market hours in local time in 24-hour format
+        // Function to calculate market hours in local time in 24-hour format
         function displayMarketHours() {
             // Define New York market opening and closing times in UTC
             const nyOpenUTC = new Date();
@@ -87,17 +95,21 @@
             const nyCloseUTC = new Date();
             nyCloseUTC.setUTCHours(21, 0, 0, 0); // NYSE closes at 4:00 PM EST/EDT
 
+            // Define Borsa İstanbul market opening and closing times in UTC
+            const bistOpenUTC = new Date();
+            bistOpenUTC.setUTCHours(7, 30, 0, 0); // BIST opens at 10:30 AM Istanbul time
+
+            const bistCloseUTC = new Date();
+            bistCloseUTC.setUTCHours(14, 0, 0, 0); // BIST closes at 5:00 PM Istanbul time
+
             // Convert to local time
-            const localOpen = new Date(nyOpenUTC.toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }));
-            const localClose = new Date(nyCloseUTC.toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }));
+            const localNYOpen = new Date(nyOpenUTC.toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }));
+            const localNYClose = new Date(nyCloseUTC.toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }));
+            const localBISTOpen = new Date(bistOpenUTC.toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }));
+            const localBISTClose = new Date(bistCloseUTC.toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }));
 
-            const openTime = localOpen.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-            const closeTime = localClose.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-
-            document.getElementById('market-hours').textContent = `New York Market Hours in your local time: Open: ${openTime}, Close: ${closeTime}`;
-
-            // Update market time lines
-            updateMarketTimeLines(localOpen, localClose);
+            updateMarketTimeLines(localNYOpen, localNYClose, 'market-open-line', 'market-close-line', 'market-highlight');
+            updateMarketTimeLines(localBISTOpen, localBISTClose, 'bist-open-line', 'bist-close-line', 'bist-highlight');
         }
 
         // Function to update the position of the local time line
@@ -114,16 +126,16 @@
         }
 
         // Function to update the position of market open and close lines and highlight
-        function updateMarketTimeLines(openTime, closeTime) {
+        function updateMarketTimeLines(openTime, closeTime, openLineId, closeLineId, highlightId) {
             const openMinutes = openTime.getHours() * 60 + openTime.getMinutes();
             const closeMinutes = closeTime.getHours() * 60 + closeTime.getMinutes();
 
             const openPercentage = (openMinutes / (24 * 60)) * 100;
             const closePercentage = (closeMinutes / (24 * 60)) * 100;
 
-            const marketOpenLine = document.getElementById('market-open-line');
-            const marketCloseLine = document.getElementById('market-close-line');
-            const marketHighlight = document.getElementById('market-highlight');
+            const marketOpenLine = document.getElementById(openLineId);
+            const marketCloseLine = document.getElementById(closeLineId);
+            const marketHighlight = document.getElementById(highlightId);
 
             marketOpenLine.style.left = `${openPercentage}%`;
             marketCloseLine.style.left = `${closePercentage}%`;
@@ -131,8 +143,8 @@
             marketHighlight.style.left = `${openPercentage}%`;
             marketHighlight.style.width = `${closePercentage - openPercentage}%`;
 
-            const marketOpenLabel = document.getElementById('market-open-label');
-            const marketCloseLabel = document.getElementById('market-close-label');
+            const marketOpenLabel = document.getElementById(`${openLineId.replace('-line', '-label')}`);
+            const marketCloseLabel = document.getElementById(`${closeLineId.replace('-line', '-label')}`);
 
             marketOpenLabel.style.left = `${openPercentage}%`;
             marketCloseLabel.style.left = `${closePercentage}%`;
@@ -144,5 +156,3 @@
     </script>
 </body>
 </html>
-
-
