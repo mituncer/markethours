@@ -34,7 +34,7 @@
         .line {
             position: absolute;
             top: -10px;
-            bottom: -40px;
+            bottom: -50px;
             width: 2px;
         }
         .local-time {
@@ -120,6 +120,7 @@
 
             const localTimeLine = document.getElementById('local-time-line');
             localTimeLine.style.left = `${percentage}%`;
+            localTimeLine.style.height = `150px`;
 
             const localTimeLabel = document.getElementById('local-time-label');
             localTimeLabel.style.left = `${percentage}%`;
@@ -152,21 +153,19 @@
             const marketOpenLabel = document.getElementById(`${openLineId.replace('-line', '-label')}`);
             const marketCloseLabel = document.getElementById(`${closeLineId.replace('-line', '-label')}`);
 
-            marketOpenLabel.style.left = `${openPercentage}%`;
+            marketOpenLabel.style.left = `${openPercentage + 1}%`;
 
             const marketOpenTimeLabel = document.getElementById(openTimeId);
-            marketOpenTimeLabel.style.left = `${openPercentage}%`;
+            marketOpenTimeLabel.style.left = `${openPercentage + 1}%`;
             marketOpenTimeLabel.textContent = `${openTime.getHours().toString().padStart(2, '0')}:${openTime.getMinutes().toString().padStart(2, '0')}`;
 
-            marketCloseLabel.style.left = `${closePercentage}%`;
+            marketCloseLabel.style.left = `${closePercentage + 1}%`;
 
             const marketCloseTimeLabel = document.getElementById(closeTimeId);
-            marketCloseTimeLabel.style.left = `${closePercentage}%`;
+            marketCloseTimeLabel.style.left = `${closePercentage + 1}%`;
             marketCloseTimeLabel.textContent = `${closeTime.getHours().toString().padStart(2, '0')}:${closeTime.getMinutes().toString().padStart(2, '0')}`;
         }
 
         displayLocalTime();
         displayMarketHours();
     </script>
-</body>
-</html>
