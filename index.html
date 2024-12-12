@@ -129,7 +129,7 @@
 
             const localTimeBelowLabel = document.createElement('div');
             localTimeBelowLabel.classList.add('time-label');
-            localTimeBelowLabel.style.left = `${percentage}%`;
+            localTimeBelowLabel.style.left = `${percentage + 0.5}%`;
             localTimeBelowLabel.textContent = localTime;
             localTimeBelowLabel.style.top = '180px';
             localTimeLine.parentNode.appendChild(localTimeBelowLabel);
@@ -173,10 +173,6 @@
         displayLocalTime();
         displayMarketHours();
 
-        // Refresh the site every minute
-        setInterval(() => {
-        displayLocalTime();
-        displayMarketHours();
-        }, 60000);
+
 
     </script>
