@@ -124,7 +124,7 @@
 
             const localTimeLabel = document.getElementById('local-time-label');
             localTimeLabel.style.left = `${percentage}%`;
-            localTimeLabel.style.top = '180px'; // Positioning the label at the bottom of the blue line
+            localTimeLabel.style.top = '160px'; // Positioning the label at the bottom of the blue line
             localTimeLabel.textContent = `Local Time`;
 
             const localTimeBelowLabel = document.createElement('div');
@@ -172,4 +172,11 @@
 
         displayLocalTime();
         displayMarketHours();
+
+        // Refresh the site every minute
+        setInterval(() => {
+        displayLocalTime();
+        displayMarketHours();
+        }, 60000);
+
     </script>
