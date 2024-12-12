@@ -45,12 +45,18 @@
         }
         .label {
             position: absolute;
-            top: 40px; /* Adjusted label position */
+            top: 30px; /* Adjusted for market names */
+            font-size: 0.9em;
+            color: #2c3e50;
+        }
+        .time-label {
+            position: absolute;
+            top: 50px; /* Adjusted for time display */
             font-size: 0.9em;
             color: #2c3e50;
         }
         .time-bar + .time-bar {
-            margin-top: 60px; /* Added more space for the second time bar */
+            margin-top: 60px;
         }
     </style>
 </head>
@@ -64,16 +70,20 @@
         <div class="label" id="local-time-label"></div>
         <div class="line market-time" id="market-open-line"></div>
         <div class="label" id="market-open-label"></div>
+        <div class="time-label" id="market-open-time"></div>
         <div class="line market-time" id="market-close-line"></div>
         <div class="label" id="market-close-label"></div>
+        <div class="time-label" id="market-close-time"></div>
     </div>
 
     <div class="time-bar" id="bist-time-bar">
         <div class="highlight" id="bist-highlight"></div>
         <div class="line market-time" id="bist-open-line"></div>
         <div class="label" id="bist-open-label"></div>
+        <div class="time-label" id="bist-open-time"></div>
         <div class="line market-time" id="bist-close-line"></div>
         <div class="label" id="bist-close-label"></div>
+        <div class="time-label" id="bist-close-time"></div>
     </div>
 
     <script>
@@ -100,8 +110,8 @@
             const localBISTOpen = new Date(bistOpenUTC.toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }));
             const localBISTClose = new Date(bistCloseUTC.toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }));
 
-            updateMarketTimeLines(localNYOpen, localNYClose, 'market-open-line', 'market-close-line', 'market-highlight', 'New York');
-            updateMarketTimeLines(localBISTOpen, localBISTClose, 'bist-open-line', 'bist-close-line', 'bist-highlight', 'BIST');
+            updateMarketTimeLines(localNYOpen, localNYClose, 'market-open-line', 'market-close-line', 'market-highlight', 'market-open-time', 'market-close-time');
+            updateMarketTimeLines(localBISTOpen, localBISTClose, 'bist-open-line', 'bist-close-line', 'bist-highlight', 'bist-open-time', 'bist-close-time');
         }
 
         function updateLocalTimeLine(now, localTime) {
@@ -113,10 +123,16 @@
 
             const localTimeLabel = document.getElementById('local-time-label');
             localTimeLabel.style.left = `${percentage}%`;
-            localTimeLabel.textContent = `Local Time: ${localTime}`;
+            localTimeLabel.textContent = `Local Time`;
+
+            const localTimeBelowLabel = document.createElement('div');
+            localTimeBelowLabel.classList.add('time-label');
+            localTimeBelowLabel.style.left = `${percentage}%`;
+            localTimeBelowLabel.textContent = localTime;
+            localTimeLine.parentNode.appendChild(localTimeBelowLabel);
         }
 
-        function updateMarketTimeLines(openTime, closeTime, openLineId, closeLineId, highlightId, marketName) {
+        function updateMarketTimeLines(openTime, closeTime, openLineId, closeLineId, highlightId, openTimeId, closeTimeId) {
             const openMinutes = openTime.getHours() * 60 + openTime.getMinutes();
             const closeMinutes = closeTime.getHours() * 60 + closeTime.getMinutes();
 
@@ -137,10 +153,18 @@
             const marketCloseLabel = document.getElementById(`${closeLineId.replace('-line', '-label')}`);
 
             marketOpenLabel.style.left = `${openPercentage}%`;
-            marketOpenLabel.textContent = `${marketName} Opens: ${openTime.getHours().toString().padStart(2, '0')}:${openTime.getMinutes().toString().padStart(2, '0')}`;
+            marketOpenLabel.textContent = `Market Opens`;
+
+            const marketOpenTimeLabel = document.getElementById(openTimeId);
+            marketOpenTimeLabel.style.left = `${openPercentage}%`;
+            marketOpenTimeLabel.textContent = `${openTime.getHours().toString().padStart(2, '0')}:${openTime.getMinutes().toString().padStart(2, '0')}`;
 
             marketCloseLabel.style.left = `${closePercentage}%`;
-            marketCloseLabel.textContent = `${marketName} Closes: ${closeTime.getHours().toString().padStart(2, '0')}:${closeTime.getMinutes().toString().padStart(2, '0')}`;
+            marketCloseLabel.textContent = `Market Closes`;
+
+            const marketCloseTimeLabel = document.getElementById(closeTimeId);
+            marketCloseTimeLabel.style.left = `${closePercentage}%`;
+            marketCloseTimeLabel.textContent = `${closeTime.getHours().toString().padStart(2, '0')}:${closeTime.getMinutes().toString().padStart(2, '0')}`;
         }
 
         displayLocalTime();
