@@ -39,6 +39,9 @@
         }
         .local-time {
             background: blue;
+            z-index: 10; /* Ensure it's in front of other elements */
+            position: relative; /* Required for z-index to take effect */
+            
         }
         .market-time {
             background: red;
