@@ -22,7 +22,7 @@
             width: 90%;
             height: 20px;
             background: #ecf0f1;
-            margin: 40px auto;
+            margin: 20px auto;
             border: 1px solid #bdc3c7;
         }
         .highlight {
@@ -34,7 +34,7 @@
         .line {
             position: absolute;
             top: -10px;
-            bottom: -40px;
+            bottom: -10px;
             width: 2px;
         }
         .local-time {
@@ -45,13 +45,13 @@
         }
         .label {
             position: absolute;
-            top: 30px;
+            top: 30px; /* Adjusted for market names */
             font-size: 0.9em;
             color: #2c3e50;
         }
         .time-label {
             position: absolute;
-            top: 50px;
+            top: 50px; /* Adjusted for time display */
             font-size: 0.9em;
             color: #2c3e50;
         }
@@ -68,7 +68,6 @@
         <div class="highlight" id="market-highlight"></div>
         <div class="line local-time" id="local-time-line"></div>
         <div class="label" id="local-time-label"></div>
-        <div class="time-label" id="local-time-time"></div>
         <div class="line market-time" id="market-open-line"></div>
         <div class="label" id="market-open-label"></div>
         <div class="time-label" id="market-open-time"></div>
@@ -126,9 +125,11 @@
             localTimeLabel.style.left = `${percentage}%`;
             localTimeLabel.textContent = `Local Time`;
 
-            const localTimeBelowLabel = document.getElementById('local-time-time');
+            const localTimeBelowLabel = document.createElement('div');
+            localTimeBelowLabel.classList.add('time-label');
             localTimeBelowLabel.style.left = `${percentage}%`;
             localTimeBelowLabel.textContent = localTime;
+            localTimeLine.parentNode.appendChild(localTimeBelowLabel);
         }
 
         function updateMarketTimeLines(openTime, closeTime, openLineId, closeLineId, highlightId, openTimeId, closeTimeId) {
@@ -171,3 +172,4 @@
     </script>
 </body>
 </html>
+
