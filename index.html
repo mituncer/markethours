@@ -34,7 +34,7 @@
         .line {
             position: absolute;
             top: -10px;
-            bottom: -10px;
+            bottom: -40px;
             width: 2px;
         }
         .local-time {
@@ -69,20 +69,20 @@
         <div class="line local-time" id="local-time-line"></div>
         <div class="label" id="local-time-label"></div>
         <div class="line market-time" id="market-open-line"></div>
-        <div class="label" id="market-open-label"></div>
+        <div class="label" id="market-open-label">New York Opens</div>
         <div class="time-label" id="market-open-time"></div>
         <div class="line market-time" id="market-close-line"></div>
-        <div class="label" id="market-close-label"></div>
+        <div class="label" id="market-close-label">New York Closes</div>
         <div class="time-label" id="market-close-time"></div>
     </div>
 
     <div class="time-bar" id="bist-time-bar">
         <div class="highlight" id="bist-highlight"></div>
         <div class="line market-time" id="bist-open-line"></div>
-        <div class="label" id="bist-open-label"></div>
+        <div class="label" id="bist-open-label">BIST Opens</div>
         <div class="time-label" id="bist-open-time"></div>
         <div class="line market-time" id="bist-close-line"></div>
-        <div class="label" id="bist-close-label"></div>
+        <div class="label" id="bist-close-label">BIST Closes</div>
         <div class="time-label" id="bist-close-time"></div>
     </div>
 
@@ -153,14 +153,12 @@
             const marketCloseLabel = document.getElementById(`${closeLineId.replace('-line', '-label')}`);
 
             marketOpenLabel.style.left = `${openPercentage}%`;
-            marketOpenLabel.textContent = `Market Opens`;
 
             const marketOpenTimeLabel = document.getElementById(openTimeId);
             marketOpenTimeLabel.style.left = `${openPercentage}%`;
             marketOpenTimeLabel.textContent = `${openTime.getHours().toString().padStart(2, '0')}:${openTime.getMinutes().toString().padStart(2, '0')}`;
 
             marketCloseLabel.style.left = `${closePercentage}%`;
-            marketCloseLabel.textContent = `Market Closes`;
 
             const marketCloseTimeLabel = document.getElementById(closeTimeId);
             marketCloseTimeLabel.style.left = `${closePercentage}%`;
@@ -172,4 +170,3 @@
     </script>
 </body>
 </html>
-
