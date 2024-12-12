@@ -123,7 +123,7 @@
             localTimeLine.style.height = `180px`;
 
             const localTimeLabel = document.getElementById('local-time-label');
-            localTimeLabel.style.left = `${percentage}%`;
+            localTimeLabel.style.left = `${percentage + 0.5}%`;
             localTimeLabel.style.top = '160px'; // Positioning the label at the bottom of the blue line
             localTimeLabel.textContent = `Local Time`;
 
@@ -173,6 +173,9 @@
         displayLocalTime();
         displayMarketHours();
 
-
+        // Refresh the site every minute
+        setInterval(() => {
+        location.reload(); // Reloads the page every minute
+        }, 60000);
 
     </script>
