@@ -34,7 +34,7 @@
         .line {
             position: absolute;
             top: -10px;
-            bottom: -50px;
+            bottom: -80px;
             width: 2px;
         }
         .local-time {
@@ -120,7 +120,7 @@
 
             const localTimeLine = document.getElementById('local-time-line');
             localTimeLine.style.left = `${percentage}%`;
-            localTimeLine.style.height = `150px`;
+            localTimeLine.style.height = `180px`;
 
             const localTimeLabel = document.getElementById('local-time-label');
             localTimeLabel.style.left = `${percentage}%`;
@@ -130,6 +130,7 @@
             localTimeBelowLabel.classList.add('time-label');
             localTimeBelowLabel.style.left = `${percentage}%`;
             localTimeBelowLabel.textContent = localTime;
+            localTimeBelowLabel.style.top = '180px';
             localTimeLine.parentNode.appendChild(localTimeBelowLabel);
         }
 
@@ -158,6 +159,8 @@
             const marketOpenTimeLabel = document.getElementById(openTimeId);
             marketOpenTimeLabel.style.left = `${openPercentage + 1}%`;
             marketOpenTimeLabel.textContent = `${openTime.getHours().toString().padStart(2, '0')}:${openTime.getMinutes().toString().padStart(2, '0')}`;
+
+
 
             marketCloseLabel.style.left = `${closePercentage + 1}%`;
 
