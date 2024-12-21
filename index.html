@@ -209,7 +209,7 @@
 
         // Conditionally call displayMarketHours()
         window.onload = function() {
-            if (!isWorkingDay(market)) {
+            if (!isWorkingDay(BIST)) {
                 displayMarketHours();
                 } else {
             // Hide the BIST close label if it's not a working day
