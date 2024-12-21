@@ -102,6 +102,23 @@
     </div>
 </div>
     <script>
+        function isWorkingDay(market) {
+            const now = new Date();
+            const day = now.getDay();
+
+            // Define public holidays for markets (example only, adjust as needed)
+            const publicHolidays = {
+                NY: ["2024-01-01", "2024-07-04", "2024-12-25"],
+                BIST: ["2024-04-23", "2024-10-29"]
+            };
+
+            const todayStr = now.toISOString().split("T")[0];
+            const isHoliday = publicHolidays[market]?.includes(todayStr);
+
+            // Return true for working days, false for weekends or holidays
+            return !(day === 0 || day === 6 || isHoliday);
+        }
+        
         function displayLocalTime() {
             const now = new Date();
             const localTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
@@ -184,8 +201,14 @@
         }
 
         displayLocalTime();
-        displayMarketHours();
+        
+        // displayMarketHours();
 
+        // Conditionally call displayMarketHours()
+            if (!isWorkingDay(market)) {
+                displayMarketHours();
+            }
+        
         // Refresh the site every minute
         setInterval(() => {
         location.reload(); // Reloads the page every minute
