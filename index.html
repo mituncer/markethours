@@ -164,7 +164,7 @@
 
             const localTimeBelowLabel = document.createElement('div');
             localTimeBelowLabel.classList.add('time-label');
-            localTimeBelowLabel.style.left = `${percentage + 0.5}%`;
+            localTimeBelowLabel.style.left = `${percentage + 1}%`;
             localTimeBelowLabel.textContent = localTime;
             localTimeBelowLabel.style.top = '180px';
             localTimeLine.parentNode.appendChild(localTimeBelowLabel);
@@ -213,7 +213,7 @@
                 displayMarketHours();
                 } else {
             // Hide the BIST close label if it's not a working day
-                document.getElementById('bist-highlight').style.display = 'none'; // Hides highlight div
+            //    document.getElementById('bist-highlight').style.display = 'none'; // Hides highlight div
                 document.getElementById('bist-open-label').style.display = 'none'; // Hides "BIST Opens" label
                 document.getElementById('bist-close-label').classList.add('hidden');
 
