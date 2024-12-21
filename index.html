@@ -208,7 +208,7 @@
         // displayMarketHours();
 
         // Conditionally call displayMarketHours()
-        window.onload = function() {
+        // window.onload = function() {
             if (!isWorkingDay("BIST")) {
                 displayMarketHours();
                 } else {
@@ -218,7 +218,7 @@
                 document.getElementById('bist-close-label').classList.add('hidden');
 
             }
-        }
+        // }
         // Refresh the site every minute
         setInterval(() => {
         location.reload(); // Reloads the page every minute
