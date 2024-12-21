@@ -209,13 +209,16 @@
 
         // Conditionally call displayMarketHours()
         // window.onload = function() {
-            if (!isWorkingDay("BIST")) {
+            if (!isWorkingDay("BIST") && !isWorkingDay("NY")) {
 
             // Hide the BIST close label if it's not a working day
             //    document.getElementById('bist-highlight').style.display = 'none'; // Hides highlight div
                 document.getElementById('bist-open-label').style.display = 'none'; // Hides "BIST Opens" label
                 document.getElementById('bist-close-label').classList.add('hidden');
-                
+
+
+                document.getElementById('ny-open-label').style.display = 'none'; // Hides "BIST Opens" label
+                document.getElementById('ny-close-label').style.display = 'none'; // Hides "BIST Opens" label
                 
                 } else {
 
