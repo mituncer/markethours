@@ -207,6 +207,9 @@
         // Conditionally call displayMarketHours()
             if (!isWorkingDay(market)) {
                 displayMarketHours();
+                } else {
+            // Hide the BIST close label if it's not a working day
+                document.getElementById('bist-close-label').classList.add('hidden');
             }
         
         // Refresh the site every minute
