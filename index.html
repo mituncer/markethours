@@ -212,6 +212,7 @@
                 displayMarketHours();
                 } else {
             // Hide the BIST close label if it's not a working day
+                document.getElementById('bist-highlight').style.display = 'none'; // Hides highlight div
                 document.getElementById('bist-open-label').style.display = 'none'; // Hides "BIST Opens" label
                 document.getElementById('bist-close-label').classList.add('hidden');
             }
