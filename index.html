@@ -78,7 +78,7 @@
     </style>
 </head>
 <body>
-    <h1>Market Hours</h1>
+    <h1></h1>
 <div class="frame">
     <p id="local-time">Detecting your local time...</p>
 
@@ -118,7 +118,7 @@
             const todayStr = now.toISOString().split("T")[0];
             const isHoliday = publicHolidays[market]?.includes(todayStr);
 
-            // Return true for working days, false for weekends or holidays
+            // Return false for working days, true for weekends or holidays
             return !(day === 0 || day === 6 || isHoliday);
         }
         
