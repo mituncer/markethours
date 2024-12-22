@@ -205,33 +205,37 @@
 
         displayLocalTime();
         
-        // displayMarketHours();
 
-        // Conditionally call displayMarketHours()
-        // window.onload = function() {
-            if (!isWorkingDay("BIST") && !isWorkingDay("NY")) {
+    if (!isWorkingDay("BIST")) {
+        // BIST is not a working day
+        document.getElementById('bist-close-line').style.display = 'none'; // Hides "BIST Opens" label
+        document.getElementById('bist-open-line').style.display = 'none'; // Hides "BIST Opens" label
+        document.getElementById('bist-open-label').innerHTML = 'BIST Market Closed Today';
+        document.getElementById('bist-close-label').style.display = 'none'; // Hides "BIST Opens" label
 
-            // Hide the BIST and NY label if it's not a working day
+    if (!isWorkingDay("NY")) {
+            // Both BIST and NY are not working days
+            document.getElementById('market-close-line').style.display = 'none'; // Hides "NY Opens" label
+            document.getElementById('market-open-line').style.display = 'none'; // Hides "NY Opens" label
+            document.getElementById('market-open-label').innerHTML = 'NYSE Closed Today';
+            document.getElementById('market-close-label').style.display = 'none'; // Hides "NY Opens" label
+        }
+    } else if (!isWorkingDay("NY")) {
+        // NY is not a working day but BIST is
+        document.getElementById('market-close-line').style.display = 'none'; // Hides "NY Opens" label
+        document.getElementById('market-open-line').style.display = 'none'; // Hides "NY Opens" label
+        document.getElementById('market-open-label').innerHTML = 'NYSE Closed Today';
+        document.getElementById('market-close-label').style.display = 'none'; // Hides "NY Opens" label
+    } else {
+        // Both BIST and NY are working days
+        displayMarketHours();
+    }
 
-                document.getElementById('bist-close-line').style.display = 'none'; // Hides "BIST Opens" label
-                document.getElementById('bist-open-line').style.display = 'none'; // Hides "BIST Opens" label
-                document.getElementById('bist-open-label').innerHTML = 'BIST Market Closed Today';
-                document.getElementById('bist-close-label').style.display = 'none'; // Hides "BIST Opens" label
-
-                document.getElementById('market-close-line').style.display = 'none'; // Hides "BIST Opens" label
-                document.getElementById('market-open-line').style.display = 'none'; // Hides "BIST Opens" label            
-                document.getElementById('market-open-label').innerHTML = 'NY Market Closed Today';
-                document.getElementById('market-close-label').style.display = 'none'; // Hides "BIST Opens" label
-                
-                } else {
-
-                displayMarketHours();
-
-            }
-        // }
-        // Refresh the site every minute
-        setInterval(() => {
-        location.reload(); // Reloads the page every minute
-        }, 60000);
+    // Refresh the site every minute
+       setInterval(() => {
+       location.reload(); // Reloads the page every minute
+       }, 60000);
 
     </script>
+</body>
+</html>
