@@ -211,12 +211,15 @@
         // window.onload = function() {
             if (!isWorkingDay("BIST") && !isWorkingDay("NY")) {
 
-            // Hide the BIST close label if it's not a working day
-            //    document.getElementById('bist-highlight').style.display = 'none'; // Hides highlight div
+            // Hide the BIST and NY label if it's not a working day
+
+                document.getElementById('bist-close-line').style.display = 'none'; // Hides "BIST Opens" label
+                document.getElementById('bist-open-line').style.display = 'none'; // Hides "BIST Opens" label
                 document.getElementById('bist-open-label').style.display = 'none'; // Hides "BIST Opens" label
-                document.getElementById('bist-close-label').classList.add('hidden');
+                document.getElementById('bist-close-label').style.display = 'none'; // Hides "BIST Opens" label
 
-
+                document.getElementById('market-close-line').style.display = 'none'; // Hides "BIST Opens" label
+                document.getElementById('market-open-line').style.display = 'none'; // Hides "BIST Opens" label
                 document.getElementById('market-open-label').style.display = 'none'; // Hides "BIST Opens" label
                 document.getElementById('market-close-label').style.display = 'none'; // Hides "BIST Opens" label
                 
